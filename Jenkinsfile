@@ -52,7 +52,29 @@ pipeline {
                 }
             }
             steps {
-                echo "no test skip"
+                withCredentials([file(credentialsId: 'gkid_npmrc', variable: 'FILE')]) {
+                  sh '''
+                    cp $FILE /root/.npmrc
+                    yarn
+                    npm publish --access public
+                  '''
+                }
+            }
+            post {
+                success {
+                    emailext (
+                        subject: "发布完成 - Thor:'${env.JOB_NAME}[${env.BUILD_NUMBER}]'",
+                        body: "<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p> <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>",
+                        to: 'kk@littlelights.ai;kenny@littlelights.ai'
+                    )
+                }
+                failure {
+                    emailext (
+                        subject: "发布失败 - Thor:'${env.JOB_NAME}[${env.BUILD_NUMBER}]'",
+                        body: "<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p> <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>",
+                        recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                    )
+                }
             }
         }
     }
