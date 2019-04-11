@@ -1,6 +1,6 @@
 {
-  "name": "thor",
-  "version": "0.0.0",
+  "name": "@gkid/thor",
+  "version": "0.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/thor.umd.js",
