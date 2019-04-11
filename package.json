@@ -12,7 +12,7 @@
   "author": "kk <kk@littlelights.ai>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:littlelights-ai/thor.git"
   },
   "license": "MIT",
   "engines": {
