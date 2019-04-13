@@ -1,15 +1,15 @@
 import { Weblog, IHttpPost } from '../../src/weblog'
-const poster = {
+export const poster = {
   send(content: any): Promise<boolean> {
     return new Promise(resolve => {
       resolve(true)
     })
   }
 }
-const win: Window = { navigator: { userAgent: '' } } as Window
+export const win: Window = { navigator: { userAgent: '' } } as Window
+export const logger = new Weblog(win, poster, 'test')
 
 test('init valid', async done => {
-  const logger = new Weblog(win, poster, 'test')
   const result = await logger.send({ ok: true })
   expect(result).toBeTruthy()
   done()
