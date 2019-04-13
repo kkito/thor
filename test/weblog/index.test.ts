@@ -14,3 +14,10 @@ test('init valid', async done => {
   expect(result).toBeTruthy()
   done()
 })
+
+test('mergeParam' , () => {
+  const result = Weblog.mergeParam({'a':1 ,'b':2} , {'b':3 , "c":3})
+  expect(result['b']).toBe(3)
+  expect(result['c']).toBe(3)
+  expect(result['a']).toBe(1)
+})
