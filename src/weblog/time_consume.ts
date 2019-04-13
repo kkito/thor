@@ -15,7 +15,7 @@ export class TimeConsume {
     const cost = new Date().getTime() - this.startTime.getTime()
     this.params['_time_consuming'] = cost
     this.params['_status'] = status
-    this.logger.send(this.params)
+    this.logger.send({'_time_cost': this.params})
     return this.params
   }
 }
