@@ -10,6 +10,8 @@ export class Weblog {
   protected poster: IHttpPost
   protected win: Window
   protected defaultParam: IAnyStringKeyObject
+  protected cacheSendContents: IAnyStringKeyObject[] = []
+  protected debounceTimer: any = null
 
   constructor(win: Window, sender: IHttpPost, defaultParams: IAnyStringKeyObject = {}) {
     this.poster = sender
@@ -17,8 +19,30 @@ export class Weblog {
     this.defaultParam = defaultParams
   }
 
-  send(content: IAnyStringKeyObject): Promise<Boolean> {
-    return this.poster.send(content)
+  send(content: IAnyStringKeyObject, immediately = false): Promise<Boolean> {
+    const sendContent = this.mergeDefaultParam(content)
+    this.cacheSendContents.push(sendContent)
+    if (immediately) {
+      return this.poster.send(this.cacheSendContents)
+    } else {
+      this.debounceSend()
+      return new Promise(resolve => {
+        resolve(true)
+      })
+    }
+  }
+
+  debounceSend() {
+    if (!this.debounceTimer) {
+      this.debounceTimer = setTimeout(() => {
+        // TODO 发送出错如何处理
+        if (this.cacheSendContents.length > 0) {
+          this.poster.send(this.cacheSendContents)
+          this.cacheSendContents = []
+          this.debounceTimer = null
+        }
+      }, 300)
+    }
   }
 
   /**
@@ -44,7 +68,7 @@ export class Weblog {
    * 增加一堆默认参数
    * @param appendParam
    */
-  appendDefaultParams(appendParam:IAnyStringKeyObject):IAnyStringKeyObject {
+  appendDefaultParams(appendParam: IAnyStringKeyObject): IAnyStringKeyObject {
     this.defaultParam = Weblog.mergeParam(this.defaultParam, appendParam)
     return this.defaultParam
   }
