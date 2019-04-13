@@ -14,10 +14,11 @@ export class Weblog {
   protected cacheSendContents: IAnyStringKeyObject[] = []
   protected debounceTimer: any = null
 
-  constructor(win: Window, sender: IHttpPost, defaultParams: IAnyStringKeyObject = {}) {
+  constructor(win: Window, sender: IHttpPost, appName:string, defaultParams: IAnyStringKeyObject = {}) {
     this.poster = sender
     this.win = win
     this.defaultParam = defaultParams
+    this.appendDefaultParam('_app_name', appName)
   }
 
   send(content: IAnyStringKeyObject, immediately = false): Promise<Boolean> {
