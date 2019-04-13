@@ -6,10 +6,10 @@ const poster = {
     })
   }
 }
-const win: Window = {} as Window
+const win: Window = { navigator: { userAgent: '' } } as Window
 
 test('init valid', async done => {
-  const logger = new Weblog(win, poster)
+  const logger = new Weblog(win, poster, 'test')
   const result = await logger.send({ ok: true })
   expect(result).toBeTruthy()
   done()
@@ -24,7 +24,7 @@ test('mergeParam', () => {
 
 describe('update params', () => {
   test('appendDefaultParam', () => {
-    const logger = new Weblog(win, poster)
+    const logger = new Weblog(win, poster, 'test')
     logger.appendDefaultParam('a', 1)
     logger.appendDefaultParams({ b: 1 })
     let result = logger._getDefaultParam()

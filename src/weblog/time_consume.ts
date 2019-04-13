@@ -11,9 +11,10 @@ export class TimeConsume {
     this.params = params
   }
 
-  finish():IAnyStringKeyObject {
+  finish(status=200):IAnyStringKeyObject {
     const cost = new Date().getTime() - this.startTime.getTime()
     this.params['_time_consuming'] = cost
+    this.params['_status'] = status
     this.logger.send(this.params)
     return this.params
   }

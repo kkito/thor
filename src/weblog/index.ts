@@ -19,6 +19,7 @@ export class Weblog {
     this.win = win
     this.defaultParam = defaultParams
     this.appendDefaultParam('_app_name', appName)
+    this.appendDefaultParam('_ua', win.navigator.userAgent)
   }
 
   send(content: IAnyStringKeyObject, immediately = false): Promise<Boolean> {
