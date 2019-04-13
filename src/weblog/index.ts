@@ -1,3 +1,4 @@
+import { TimeConsume } from './time_consume'
 export interface IHttpPost {
   send(content: any): Promise<Boolean>
 }
@@ -32,6 +33,21 @@ export class Weblog {
     }
   }
 
+  /**
+   * start a time consuming, usage
+   * cosnt start = logger.startTimeCost({'url':'xxxx'})
+   * // ...... request.then
+   * // start.finish()
+   *
+   * @param params any object
+   */
+  startTimeCost(params:IAnyStringKeyObject = {}):TimeConsume {
+    return new TimeConsume(this, params)
+  }
+
+  /**
+   * 延迟 300ms在发送, 期间holding住所有的数据
+   */
   debounceSend() {
     if (!this.debounceTimer) {
       this.debounceTimer = setTimeout(() => {
