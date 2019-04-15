@@ -14,12 +14,22 @@ export class Weblog {
   protected cacheSendContents: IAnyStringKeyObject[] = []
   protected debounceTimer: any = null
 
-  constructor(win: Window, sender: IHttpPost, appName:string, defaultParams: IAnyStringKeyObject = {}) {
+  constructor(
+    win: Window,
+    sender: IHttpPost,
+    appName: string,
+    defaultParams: IAnyStringKeyObject = {}
+  ) {
     this.poster = sender
     this.win = win
     this.defaultParam = defaultParams
     this.appendDefaultParam('_app_name', appName)
     this.appendDefaultParam('_ua', win.navigator.userAgent)
+  }
+
+  event(eventName: string, eventParams: IAnyStringKeyObject = {}): void {
+    eventParams['_event'] = eventName
+    this.send(eventParams)
   }
 
   send(content: IAnyStringKeyObject, immediately = false): Promise<Boolean> {
@@ -43,7 +53,7 @@ export class Weblog {
    *
    * @param params any object
    */
-  startTimeCost(params:IAnyStringKeyObject = {}):TimeConsume {
+  startTimeCost(params: IAnyStringKeyObject = {}): TimeConsume {
     return new TimeConsume(this, params)
   }
 

@@ -22,6 +22,12 @@ test('mergeParam', () => {
   expect(result['a']).toBe(1)
 })
 
+test('event', () => {
+    const logger = new Weblog(win, poster, 'test')
+    logger.event('test')
+    logger.event('test', {'dex': 2})
+})
+
 describe('update params', () => {
   test('appendDefaultParam', () => {
     const logger = new Weblog(win, poster, 'test')
