@@ -6,7 +6,7 @@ export const poster = {
     })
   }
 }
-export const win: Window = { navigator: { userAgent: '' } } as Window
+export const win: Window = { navigator: { userAgent: '' } , location: {href: ''} } as Window
 export const logger = new Weblog(win, poster, 'test')
 
 test('init valid', async done => {

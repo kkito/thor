@@ -96,7 +96,10 @@ export class Weblog {
   }
 
   private mergeDefaultParam(param: IAnyStringKeyObject): IAnyStringKeyObject {
-    return Weblog.mergeParam(this.defaultParam, param)
+    const reuslt = Weblog.mergeParam(this.defaultParam, param)
+    // 动态拼上一些数据
+    reuslt['_location_url'] = this.win.location.href
+    return reuslt
   }
 
   static mergeParam(
