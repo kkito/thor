@@ -32,6 +32,13 @@ export class Weblog {
     this.send(eventParams)
   }
 
+  logError(error: Error, errorParams: IAnyStringKeyObject = {}): void {
+    errorParams['_event'] = 'Error'
+    errorParams['message'] = error.message
+    errorParams['stack'] = error.stack
+    this.send(errorParams)
+  }
+
   send(content: IAnyStringKeyObject, immediately = false): Promise<Boolean> {
     const sendContent = this.mergeDefaultParam(content)
     this.cacheSendContents.push(sendContent)

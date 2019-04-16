@@ -28,6 +28,12 @@ test('event', () => {
     logger.event('test', {'dex': 2})
 })
 
+test('logError', () => {
+    const logger = new Weblog(win, poster, 'test')
+    logger.logError(new Error('test'))
+    logger.logError(new Error('test'), {'test':'33'})
+})
+
 describe('update params', () => {
   test('appendDefaultParam', () => {
     const logger = new Weblog(win, poster, 'test')
