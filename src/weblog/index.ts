@@ -23,17 +23,17 @@ export class Weblog {
     this.poster = sender
     this.win = win
     this.defaultParam = defaultParams
-    this.appendDefaultParam('_app_name', appName)
-    this.appendDefaultParam('_ua', win.navigator.userAgent)
+    this.appendDefaultParam('G_app_name', appName)
+    this.appendDefaultParam('G_ua', win.navigator.userAgent)
   }
 
   event(eventName: string, eventParams: IAnyStringKeyObject = {}): void {
-    eventParams['_event'] = eventName
+    eventParams['G_event'] = eventName
     this.send(eventParams)
   }
 
   logError(error: Error, errorParams: IAnyStringKeyObject = {}): void {
-    errorParams['_event'] = 'Error'
+    errorParams['G_event'] = 'Error'
     errorParams['message'] = error.message
     errorParams['stack'] = error.stack
     this.send(errorParams)
@@ -115,7 +115,7 @@ export class Weblog {
   private mergeDefaultParam(param: IAnyStringKeyObject): IAnyStringKeyObject {
     const reuslt = Weblog.mergeParam(this.defaultParam, param)
     // 动态拼上一些数据
-    reuslt['_location_url'] = this.win.location.href
+    reuslt['G_location_url'] = this.win.location.href
     return reuslt
   }
 

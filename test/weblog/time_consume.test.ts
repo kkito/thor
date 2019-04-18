@@ -16,7 +16,7 @@ test('finish', () => {
   expect(tc).not.toBeNull()
 
   let result = tc.finish()
-  expect(result['_status']).toEqual(200)
+  expect(result['G_status']).toEqual(200)
   result = tc.finish(401)
-  expect(result['_status']).toEqual(401)
+  expect(result['G_status']).toEqual(401)
 })
