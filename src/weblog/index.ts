@@ -60,8 +60,8 @@ export class Weblog {
    *
    * @param params any object
    */
-  startTimeCost(params: IAnyStringKeyObject = {}): TimeConsume {
-    return new TimeConsume(this, params)
+  startTimeCost(params: IAnyStringKeyObject = {}, timeout=5000): TimeConsume {
+    return new TimeConsume(this, params, timeout)
   }
 
   /**
