@@ -1,4 +1,5 @@
 import { TimeConsume } from './time_consume'
+import { Utils } from './utils';
 export interface IHttpPost {
   send(content: any): Promise<Boolean>
 }
@@ -80,6 +81,13 @@ export class Weblog {
     }
   }
 
+  clearDebounce() {
+    if(this.debounceTimer) {
+      clearTimeout(this.debounceTimer)
+      this.debounceTimer = null
+    }
+  }
+
   /**
    * 给默认param增加新的一个key
    * @param key 新增加的key
@@ -113,10 +121,31 @@ export class Weblog {
   }
 
   private mergeDefaultParam(param: IAnyStringKeyObject): IAnyStringKeyObject {
+    this.setUniqueKey()
     const reuslt = Weblog.mergeParam(this.defaultParam, param)
     // 动态拼上一些数据
     reuslt['G_location_url'] = this.win.location.href
     return reuslt
+  }
+
+  private setUniqueKey():boolean {
+    const key = 'G_UV'
+    try {
+      if (this.defaultParam[key]) {
+        return false
+      } else {
+        let storageValue = this.win.localStorage.getItem(key)
+        if (!storageValue) {
+          storageValue = Utils.buildUUID()
+          this.win.localStorage.setItem(key, storageValue)
+        }
+        this.defaultParam[key] = storageValue
+        return true
+      }
+    } catch (e) {
+      return false
+    }
+
   }
 
   static mergeParam(

@@ -28,6 +28,9 @@ export class TimeConsume {
     this.params['G_time_consuming'] = cost
     this.params['G_status'] = status
     this.logger.send({ G_time_cost: this.params })
+    if(this.timer) {
+      clearTimeout(this.timer)
+    }
     this.timer = null
     return this.params
   }
