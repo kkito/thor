@@ -14,6 +14,7 @@ export class Weblog {
   protected defaultParam: IAnyStringKeyObject
   protected cacheSendContents: IAnyStringKeyObject[] = []
   protected debounceTimer: any = null
+  readonly guvKey = 'G_UV'
 
   constructor(
     win: Window,
@@ -116,6 +117,11 @@ export class Weblog {
     return this.defaultParam
   }
 
+  public getGUV (): string {
+    this.setUniqueKey()
+    return this.defaultParam[this.guvKey]
+  }
+
   _getDefaultParam(): IAnyStringKeyObject {
     return this.defaultParam
   }
@@ -129,8 +135,8 @@ export class Weblog {
   }
 
   private setUniqueKey():boolean {
-    const key = 'G_UV'
     try {
+      const key = this.guvKey
       if (this.defaultParam[key]) {
         return false
       } else {
