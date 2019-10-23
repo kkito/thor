@@ -131,6 +131,7 @@ export class Weblog {
     const reuslt = Weblog.mergeParam(this.defaultParam, param)
     // 动态拼上一些数据
     reuslt['G_location_url'] = this.win.location.href
+    reuslt['G_trigger_time'] = new Date().toISOString()
     return reuslt
   }
 
