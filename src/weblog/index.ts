@@ -30,8 +30,35 @@ export class Weblog {
   }
 
   event(eventName: string, eventParams: IAnyStringKeyObject = {}): void {
+    this.eventImmediately(eventName, eventParams, false)
+  }
+
+  /**
+   * 马上发布
+   * @param eventName 事件名称
+   * @param eventParams 事件参数
+   */
+  eventImmediately(eventName: string, eventParams: IAnyStringKeyObject = {}, immediately = true): void {
     eventParams['G_event'] = eventName
-    this.send(eventParams)
+    this.send(eventParams, immediately)
+  }
+
+  /**
+   * 详细的事件体系: event , eventId, eventStep
+   * @param eventName 事件名称
+   * @param eventId 时间ID
+   * @param eventStep 时间步骤
+   * @param immediately 是否立即发送
+   */
+  detailEvent(eventName:string , eventId?:string|number , eventStep?:string , immediately = false): void {
+    const eventParams:any = {}
+    if (eventId) {
+      eventParams['G_event_id'] = eventId
+    }
+    if(eventStep) {
+      eventParams['G_event_step'] = eventStep
+    }
+    this.eventImmediately(eventName, eventParams, immediately)
   }
 
   logError(error: Error, errorParams: IAnyStringKeyObject = {}): void {
